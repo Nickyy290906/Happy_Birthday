@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1024">
+    <title>Happy Birthday!</title>
+    <style>
+        body {
+            text-align: center;
+            background: url('9083409') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome {
+            font-size: 50px;
+            color: #660033;
+            font-weight: bold;
+            animation: fadeIn 3s ease-in-out infinite alternate;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0.5; }
+            to { opacity: 1; }
+        }
+        .surprise-button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            text-transform: uppercase;
+        }
+        .surprise-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        .slideshow {
+            width: 80%;
+            max-width: 600px;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px auto;
+            display: none;
+        }
+        .slides {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .slides img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            position: absolute;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .slides img.active {
+            opacity: 1;
+        }
+        .gift-box-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .gift-box {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: relative;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        .ribbon {
+            width: 100%;
+            height: 10px;
+            background: gold;
+            position: absolute;
+            top: 45%;
+        }
+        .lid {
+            width: 110px;
+            height: 20px;
+            background: red;
+            position: absolute;
+            top: -20px;
+            left: -5px;
+            border-radius: 10px;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
+        .open .lid {
+            transform: rotateX(120deg) translateY(-40px);
+            opacity: 0;
+        }
+        .heart {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            font-size: 20px;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        /* Message styles */
+        .message {
+            display: none;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            margin-top: 20px;
+            animation: fadeInMessage 1s ease-in-out;
+        }
+        @keyframes fadeInMessage {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1 class="welcome">HAPPIEST KRISHNA CONCIOUS BIRTHDAY, SAKSHI! 🎉🎂</h1>
+    <button class="surprise-button" onclick="showSurprise()">Click me for a surprise!</button>
+    
+    <div class="gift-box-container">
+        <div class="gift-box" id="giftBox" onclick="showSurprise()">
+            <div class="lid" id="lid"></div>
+            <div class="ribbon"></div>
+        </div>
+    </div>
+    
+    <div class="slideshow" id="slideshow">
+        <div class="slides">
+            <img src="image1" class="active">
+            <img src="image2">
+            <img src="image3">
+            <img src="image4">
+            <img src="image5">
+            <img src="image6">
+            <img src="image7">
+            <img src="image8">
+            <img src="image9">
+            <img src="image10">
+            <img src="image11">
+            <img src="image12">
+        </div>
+    </div>
+
+    <!-- Message -->
+    <p id="message" class="message"><b> "Wishing you a day as lovely as your smile and a year as amazing as your spirit". </b> 💖</p>
+
+    <audio id="birthday-audio" preload="auto">
+        <source src="Blue-Yung-Kai" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        function showSurprise() {
+            document.getElementById('slideshow').style.display = 'block';
+            document.getElementById('birthday-audio').play();
+            document.getElementById('giftBox').classList.add('open');
+            document.getElementById('message').style.display = 'block'; // Show message when slideshow starts
+            createHearts();
+            cycleImages();
+        }
+
+        function cycleImages() {
+            let images = document.querySelectorAll(".slides img");
+            if (images.length === 0) return;
+            let currentIndex = 0;
+
+            setInterval(() => {
+                images[currentIndex].classList.remove("active");
+                currentIndex = (currentIndex + 1) % images.length;
+                images[currentIndex].classList.add("active");
+            }, 2000); // Loop slideshow every 2 seconds
+        }
+
+        function createHearts() {
+            const emojis = ["❤", "🧡", "💛", "💚", "💙", "💜", "💖", "💗", "💘", "💕","💝","🥰","💖"];
+            setInterval(() => {
+                let heart = document.createElement("div");
+                heart.className = "heart";
+                heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+                heart.style.fontSize = Math.random() * 10 + 15 + "px";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 5000);
+            }, 300);
+        }
+
+        if (window.innerWidth < 1024) {
+            document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1024');
+        }
+    </script>
+</body>
+</html>
